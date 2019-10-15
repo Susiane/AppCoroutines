@@ -2,10 +2,7 @@ package com.pojeto.appcoroutines
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
 import kotlinx.coroutines.*
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         var list = listOf<Film>()
         coroutineScope.launch {
             val response = withContext(Dispatchers.IO){
-                val api = Api()
-                api.getFilms().await()
+                val call = RetrofitInicializer().starWarsService().listMovies()
+                call.execute()
             }
             val filmResult = response.body()!!
             list = filmResult.results
